@@ -1,0 +1,13 @@
+ARG NODE_VERSION=slim
+ARG NGINX_VERSION=alpine
+
+FROM node:${NODE_VERSION} AS build
+RUN useradd -d /project -m build
+USER build
+WORKDIR /project
+COPY --chown=build:build . /project
+RUN npm install
+RUN npm run build
+
+FROM nginx:${NGINX_VERSION}
+COPY --from=build --chown=nginx:nginx /project/build /usr/share/nginx/html

@@ -1,0 +1,23 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  web-node:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: lesson17:node
+    ports:
+      - "80:3000"
+    networks:
+      - front
+  web-nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    image: lesson17:nginx
+    ports:
+      - "8000:80"
+    networks:
+      - front
+
+networks:
+  front: {}
