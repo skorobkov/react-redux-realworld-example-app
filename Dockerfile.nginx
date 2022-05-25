@@ -1,8 +1,8 @@
-ARG NODE_VERSION=slim
+ARG NODE_VERSION=alpine
 ARG NGINX_VERSION=alpine
 
 FROM node:${NODE_VERSION} AS build
-RUN useradd -d /project -m build
+RUN adduser -D -h /project build
 USER build
 WORKDIR /project
 COPY --chown=build:build . /project
